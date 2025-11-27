@@ -21,3 +21,17 @@ def add_todo(request):
         if title:
             Todo.objects.create(title=title)
     return redirect("todo_list")
+
+
+def toggle_todo(request, todo_id):
+    """
+    View to toggle the completed status of a todo item.
+    """
+    if request.method == "POST":
+        try:
+            todo = Todo.objects.get(id=todo_id)
+            todo.completed = not todo.completed
+            todo.save()
+        except Todo.DoesNotExist:
+            pass
+    return redirect("todo_list")
