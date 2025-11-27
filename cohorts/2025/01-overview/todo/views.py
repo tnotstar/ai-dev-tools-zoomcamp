@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Todo
 
 
@@ -10,3 +10,14 @@ def todo_list(request):
     todos = Todo.objects.all()
     context = {"todos": todos}
     return render(request, "todo/home.html", context)
+
+
+def add_todo(request):
+    """
+    View to add a new todo item.
+    """
+    if request.method == "POST":
+        title = request.POST.get("title")
+        if title:
+            Todo.objects.create(title=title)
+    return redirect("todo_list")

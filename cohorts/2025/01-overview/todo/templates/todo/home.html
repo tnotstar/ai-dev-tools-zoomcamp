@@ -1,6 +1,16 @@
-{% extends "base.html" %} {% block title %}My TODO List{% endblock %} {% block
-content %}
+{% extends "base.html" %}
+
+{% block title %}My TODO List{% endblock %}
+
+{% block content %}
 <h1>My TODO List</h1>
+
+<form method="post" action="{% url 'add_todo' %}">
+  {% csrf_token %}
+  <input type="text" name="title" placeholder="Enter a new todo item" required style="padding: 5px; width: 300px;">
+  <button type="submit" style="padding: 5px 15px; cursor: pointer;">Add</button>
+</form>
+
 <ul>
   {% for todo in todos %}
   <li>
@@ -11,4 +21,5 @@ content %}
   <li>No TODO items have been added yet.</li>
   {% endfor %}
 </ul>
+
 {% endblock %}
